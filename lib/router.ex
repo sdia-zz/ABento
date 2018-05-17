@@ -29,9 +29,7 @@ defmodule Abento.Router do
     send_resp(conn, status, body)
   end
 
-
   match(_, do: send_resp(conn, 404, "Not found :-)!"))
-
 
   defp get_experiments() do
     data = [
@@ -41,6 +39,7 @@ defmodule Abento.Router do
       %{"experiment_id" => 4, "label" => "a/a testing"},
       %{"experiment_id" => 5, "label" => "new layout style"}
     ]
+
     Poison.encode!(data)
   end
 
@@ -49,7 +48,6 @@ defmodule Abento.Router do
   end
 
   defp create_experiment(xp_label) do
-    Poison.encode!(%{"experiment_id" => 12,  "label"=> xp_label})
+    Poison.encode!(%{"experiment_id" => 12, "label" => xp_label})
   end
-
 end
