@@ -1,18 +1,15 @@
 defmodule Abento do
-  @moduledoc """
-  Documentation for Abento.
-  """
+  use Application
+  require Logger
 
-  @doc """
-  Hello world.
+  def start(_type, _args) do
 
-  ## Examples
+    port = Application.get_env(:plug_ex, :cowboy_port, 8000)
+    children = [
+      Plug.Adapters.Cowboy.child_spec(:http, Abento.Router, [], port: port)
+    ]
 
-      iex> Abento.hello
-      :world
-
-  """
-  def hello do
-    :world
+    Logger.info("Application started!")
+    Supervisor.start_link(children, strategy: :one_for_one)
   end
 end

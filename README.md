@@ -1,6 +1,6 @@
 # Abento
 
-A/B testing app: in-memory, fast and light.
+A/B testing app: in-memory, fast and lightweight.
 
 
 
