@@ -19,11 +19,19 @@ defmodule Abento.Router do
     send_resp(conn, 200, get_experiments())
   end
 
+  post "/api/experiments" do
+    {status, body} =
+      case conn.body_params do
+        %{"experiment_label" => experiment_label} -> {200, create_experiment(experiment_label)}
+        _ -> {400, "Bad request"}
+      end
+
+    send_resp(conn, status, body)
+  end
+
+
   match(_, do: send_resp(conn, 404, "Not found :-)!"))
 
-  defp get_experiment(id) do
-    Poison.encode!(%{"experiment_id" => id, "label" => "button_color"})
-  end
 
   defp get_experiments() do
     data = [
@@ -33,7 +41,15 @@ defmodule Abento.Router do
       %{"experiment_id" => 4, "label" => "a/a testing"},
       %{"experiment_id" => 5, "label" => "new layout style"}
     ]
-
     Poison.encode!(data)
   end
+
+  defp get_experiment(id) do
+    Poison.encode!(%{"experiment_id" => id, "label" => "button_color"})
+  end
+
+  defp create_experiment(xp_label) do
+    Poison.encode!(%{"experiment_id" => 12,  "label"=> xp_label})
+  end
+
 end
