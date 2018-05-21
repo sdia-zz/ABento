@@ -24,6 +24,18 @@ defmodule Abento.Router do
     send_resp(conn, 200, get_experiments())
   end
 
+  post "/api/assignments/:experiment" do
+    # {status, body} = create_assignment(conn.body_params, experiment)
+
+
+    body = %{"message" => "NOT_IMPLMENTED_ERROR",
+             "experiment" => experiment
+           } |> Poison.encode!
+    status = 200
+    send_resp(conn, status, body)
+  end
+
+
   post "/api/experiments" do
     {status, body} = create_experiment(conn.body_params)
     send_resp(conn, status, body)
