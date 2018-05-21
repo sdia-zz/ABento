@@ -23,9 +23,10 @@ defmodule Abento.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:plug, "~> 1.0"},
-      {:cowboy, "~> 1.0"},
-      {:poison, "~> 3.1"}
+      {:plug,    "~> 1.0"},
+      {:cowboy,  "~> 1.0"},
+      {:poison,  "~> 3.1"},
+      {:amnesia, "~> 0.2"}
     ]
   end
 end

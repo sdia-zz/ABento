@@ -28,3 +28,4 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+## config :mnesia, dir: to_charlist Path.join(File.cwd!, "priv/data")
