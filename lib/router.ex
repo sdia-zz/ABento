@@ -2,10 +2,8 @@ defmodule Abento.Router do
   use Plug.Router
   require Logger
 
-
   use Amnesia
   use Database
-
 
   plug(Plug.Logger)
   plug(Plug.Parsers, parsers: [:json], json_decoder: Poison)
@@ -27,14 +25,10 @@ defmodule Abento.Router do
   post "/api/assignments/:experiment" do
     # {status, body} = create_assignment(conn.body_params, experiment)
 
-
-    body = %{"message" => "NOT_IMPLMENTED_ERROR",
-             "experiment" => experiment
-           } |> Poison.encode!
+    body = %{"message" => "NOT_IMPLMENTED_ERROR", "experiment" => experiment} |> Poison.encode!()
     status = 200
     send_resp(conn, status, body)
   end
-
 
   post "/api/experiments" do
     {status, body} = create_experiment(conn.body_params)
@@ -45,10 +39,9 @@ defmodule Abento.Router do
 
   defp get_experiments() do
     Amnesia.transaction do
-      selection = Experiment.where true
-      selection |> Amnesia.Selection.values |> Poison.encode!
+      selection = Experiment.where(true)
+      selection |> Amnesia.Selection.values() |> Poison.encode!()
     end
-
   end
 
   defp get_experiment(id) do
@@ -56,21 +49,24 @@ defmodule Abento.Router do
   end
 
   defp create_experiment(p) do
-    body = Amnesia.transaction do
-       %Experiment{name: p["name"],
-                   sampling: p["sampling"],
-                   description: p["description"],
-                   created_date: DateTime.utc_now,
-                   updated_date: DateTime.utc_now,
-                   start_date: p["start_date"],
-                   end_date: p["end_date"],
-                   variants: p["variants"]
-                 }
-     |> Experiment.write
+    body =
+      Amnesia.transaction do
+        %Experiment{
+          name: p["name"],
+          sampling: p["sampling"],
+          description: p["description"],
+          created_date: DateTime.utc_now(),
+          updated_date: DateTime.utc_now(),
+          start_date: p["start_date"],
+          end_date: p["end_date"],
+          variants: p["variants"]
+        }
+        |> Experiment.write()
 
-     q = Experiment.where name == p["name"]
-     q |> Amnesia.Selection.values |> Poison.encode!
-    end
+        q = Experiment.where(name == p["name"])
+        q |> Amnesia.Selection.values() |> Poison.encode!()
+      end
+
     {200, body}
   end
 end
