@@ -29,3 +29,14 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 ## config :mnesia, dir: to_charlist Path.join(File.cwd!, "priv/data")
+
+
+
+config :libcluster,
+  topologies: [
+    k8s_example: [
+      strategy: Elixir.Cluster.Strategy.Kubernetes,
+      config: [
+        kubernetes_node_basename: "myapp",
+        kubernetes_selector: "app=myapp",
+        polling_interval: 1]]]

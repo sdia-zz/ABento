@@ -10,8 +10,18 @@ defmodule Abento.Router do
   plug(:match)
   plug(:dispatch)
 
+
+
   get "/" do
-    send_resp(conn, 200, "Abento api")
+    response = %{
+      app: "Abento API v0.1-switch default kub config.",
+      current_node: :erlang.node,
+      connected_nodes: :erlang.nodes
+    }
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(201, Poison.encode!(response))
   end
 
   get "/api/experiments/:id" do

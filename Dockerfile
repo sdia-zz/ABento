@@ -4,7 +4,7 @@ WORKDIR /src
 RUN mix local.hex --force
 RUN mix local.rebar --force
 RUN mix do deps.get, compile
-RUN mix amnesia.drop   --database Database #Warning
+RUN mix amnesia.drop   --database Database
 RUN mix amnesia.create --database Database --disk
 
 EXPOSE 8000
