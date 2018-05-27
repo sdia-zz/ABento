@@ -10,6 +10,8 @@ defmodule Abento do
     ]
 
     Logger.info("Application started!")
+    podIP = System.get_env("MY_POD_IP")
+    Logger.info(fn -> "Pod IP is : #{podIP}" end)
     Supervisor.start_link(children, strategy: :one_for_one)
   end
 end

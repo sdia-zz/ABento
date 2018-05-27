@@ -14,7 +14,7 @@ defmodule Abento.Router do
 
   get "/" do
     response = %{
-      app: "Abento API v0.1-switch default kub config.",
+      app: "the magic real",
       current_node: :erlang.node,
       connected_nodes: :erlang.nodes
     }

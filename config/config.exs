@@ -33,10 +33,14 @@ use Mix.Config
 
 
 config :libcluster,
+  debug: true,
   topologies: [
-    k8s_example: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
+    k8s: [
+      strategy: Cluster.Strategy.Kubernetes,
       config: [
         kubernetes_node_basename: "myapp",
         kubernetes_selector: "app=myapp",
-        polling_interval: 1]]]
+        polling_interval: 10_000
+        ]
+      ]
+    ]
