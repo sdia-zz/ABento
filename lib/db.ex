@@ -38,14 +38,14 @@ defdatabase Database do
     end
   end
 
-  deftable Assignment, [:user_hash, :user_id, :experiment, :variant, :assigned_at],
+  deftable Assignment, [:user_hash, :user_id, :experiment, :variant, :assignment_date],
     index: [:user_id, :experiment] do
     @type t :: %Assignment{
             user_hash: String.t(),
             user_id: String.t(),
             experiment: String.t(),
             variant: String.t(),
-            assigned_at: DateTime
+            assignment_date: DateTime
           }
 
     def assignment(self) do
@@ -57,38 +57,21 @@ defdatabase Database do
     end
   end
 
-  ################################################################################
-  deftable(User)
-
-  deftable Message, [:user_id, :content], type: :bag do
-    @type t :: %Message{user_id: integer, content: String.t()}
-
-    def user(self) do
-      User.read(self.user_id)
+  deftable Exclusion, [:experiment_source, :experiment_target, :exclusion_date],
+    index: [:experiment_source, :experiment_target] do
+    @type t :: %Exclusion{
+        experiment_source: String.t(),
+        experiment_target: String.t(),
+        exclusion_date: DateTime
+      }
     end
 
-    def user!(self) do
-      User.read!(self.user_id)
-    end
-  end
-
-  deftable User, [{:id, autoincrement}, :name, :email], type: :ordered_set, index: [:email] do
-    @type t :: %User{id: non_neg_integer, name: String.t(), email: String.t()}
-
-    def add_message(self, content) do
-      %Message{user_id: self.id, content: content} |> Message.write()
+    def exclusion(self) do
+      Exclusion.read(self.experiment_source)
     end
 
-    def add_message!(self, content) do
-      %Message{user_id: self.id, content: content} |> Message.write!()
+    def exclusion!(self) do
+      Exclusion.read!(self.experiment_source)
     end
 
-    def messages(self) do
-      Message.read(self.id)
-    end
-
-    def messages!(self) do
-      Message.read!(self.id)
-    end
-  end
 end
