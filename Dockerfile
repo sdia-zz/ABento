@@ -17,7 +17,7 @@ RUN MIX_ENV=prod mix release --env=prod
 
 
 
-RUN mix amnesia.drop   --database Database
+# RUN mix amnesia.drop   --database Database
 RUN mix amnesia.create --database Database --disk
 
 

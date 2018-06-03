@@ -57,21 +57,21 @@ defdatabase Database do
     end
   end
 
-  deftable Exclusion, [:experiment_source, :experiment_target, :exclusion_date],
-    index: [:experiment_source, :experiment_target] do
-    @type t :: %Exclusion{
-        experiment_source: String.t(),
-        experiment_target: String.t(),
-        exclusion_date: DateTime
-      }
-    end
-
-    def exclusion(self) do
-      Exclusion.read(self.experiment_source)
-    end
-
-    def exclusion!(self) do
-      Exclusion.read!(self.experiment_source)
-    end
+##  deftable Exclusion, [:experiment_source, :experiment_target, :exclusion_date],
+##    index: [:experiment_source, :experiment_target] do
+##    @type t :: %Exclusion{
+##        experiment_source: String.t(),
+##        experiment_target: String.t(),
+##        exclusion_date: DateTime
+##      }
+##
+##    def exclusion(self) do
+##      Exclusion.read(self.experiment_source)
+##    end
+##
+##    def exclusion!(self) do
+##      Exclusion.read!(self.experiment_source)
+##    end
+##  end
 
 end
