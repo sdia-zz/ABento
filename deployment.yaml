@@ -64,7 +64,7 @@ kind: Deployment
 metadata:
   name: myapp
 spec:
-  replicas: 15
+  replicas: 5
   template:
     metadata:
       labels:

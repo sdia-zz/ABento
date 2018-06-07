@@ -10,13 +10,11 @@ defmodule Abento.Router do
   plug(:match)
   plug(:dispatch)
 
-
-
   get "/" do
     response = %{
       app: "the magic real",
-      current_node: :erlang.node,
-      connected_nodes: :erlang.nodes
+      current_node: :erlang.node(),
+      connected_nodes: :erlang.nodes()
     }
 
     conn
@@ -24,12 +22,16 @@ defmodule Abento.Router do
     |> send_resp(201, Poison.encode!(response))
   end
 
-  get "/api/experiments/:id" do
-    send_resp(conn, 200, get_experiment(id))
+  get "/api/experiments/" do
+    resp = get_experiments()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, resp)
   end
 
-  get "/api/experiments" do
-    send_resp(conn, 200, get_experiments())
+  get "/api/experiments/:id" do
+    send_resp(conn, 200, get_experiment(id))
   end
 
   post "/api/assignments/:experiment" do

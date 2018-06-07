@@ -13,3 +13,16 @@ docker build -t sdia/abento:latest  .
 docker run -d -p 8000:8000 sdia/abento:latest
 docker push sdia/abento:latest
 ```
+
+
+assignments
+impressions
+actions
+
+
+
+```bash
+
+kubectl exec -it some-pod -- /bin/bash
+bin/myapp remote_console
+```

@@ -30,8 +30,6 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 ## config :mnesia, dir: to_charlist Path.join(File.cwd!, "priv/data")
 
-
-
 config :libcluster,
   debug: true,
   topologies: [
@@ -41,6 +39,6 @@ config :libcluster,
         kubernetes_node_basename: "myapp",
         kubernetes_selector: "app=myapp",
         polling_interval: 10_000
-        ]
       ]
     ]
+  ]
