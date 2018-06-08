@@ -74,41 +74,41 @@ defdatabase Database do
     end
   end
 
-##   deftable Action, [:user_hash, :user_id, :experiment, :action_date],
-##     index: [:user_id, :experiment] do
-##     @type t :: %Action{
-##             user_hash: String.t(),
-##             user_id: String.t(),
-##             experiment: String.t(),
-##             action_date: DateTime
-##           }
-## 
-##     def action(self) do
-##       Action.read(self.user_hash)
-##     end
-## 
-##     def action!(self) do
-##       Action.read!(self.user_hash)
-##     end
-##   end
-## 
-##   deftable Impression, [:user_hash, :user_id, :experiment, :impression_date],
-##     index: [:user_id, :experiment] do
-##     @type t :: %Impression{
-##             user_hash: String.t(),
-##             user_id: String.t(),
-##             experiment: String.t(),
-##             impression_date: DateTime
-##           }
-## 
-##     def impression(self) do
-##       Impression.read(self.user_hash)
-##     end
-## 
-##     def impression!(self) do
-##       Impression.read!(self.user_hash)
-##     end
-##   end
+##  deftable Action, [:user_hash, :user_id, :experiment, :action_date],
+##    index: [:user_id, :experiment] do
+##    @type t :: %Action{
+##            user_hash: String.t(),
+##            user_id: String.t(),
+##            experiment: String.t(),
+##            action_date: DateTime
+##          }
+##
+##    def action(self) do
+##      Action.read(self.user_hash)
+##    end
+##
+##    def action!(self) do
+##      Action.read!(self.user_hash)
+##    end
+##  end
+##
+##  deftable Impression, [:user_hash, :user_id, :experiment, :impression_date],
+##    index: [:user_id, :experiment] do
+##    @type t :: %Impression{
+##            user_hash: String.t(),
+##            user_id: String.t(),
+##            experiment: String.t(),
+##            impression_date: DateTime
+##          }
+##
+##    def impression(self) do
+##      Impression.read(self.user_hash)
+##    end
+##
+##    def impression!(self) do
+##      Impression.read!(self.user_hash)
+##    end
+##  end
 end
 
 defmodule Abento.DB do

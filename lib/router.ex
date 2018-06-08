@@ -35,8 +35,7 @@ defmodule Abento.Router do
 
     conn
     |> put_resp_content_type("application/json")
-
-    send_resp(conn, 200, resp)
+    |> send_resp(200, resp)
   end
 
   # post "/api/variants/experiments/:experiment_name/user/:user_id" do
