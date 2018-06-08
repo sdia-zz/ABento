@@ -30,16 +30,20 @@ defmodule Abento.Router do
     |> send_resp(200, resp)
   end
 
-  get "/api/experiments/:id" do
-    send_resp(conn, 200, get_experiment(id))
+  get "/api/experiments/:name" do
+    send_resp(conn, 200, get_experiment(name))
   end
 
-  post "/api/assignments/:experiment" do
-    # {status, body} = create_assignment(conn.body_params, experiment)
+  # post "/api/variants/experiments/:experiment_name/user/:user_id" do
+  get "/api/variants/experiments/:experiment_name/user/:user_id" do
+    Logger.info(fn -> "#{experiment_name}" end)
+    Logger.info(fn -> "#{user_id}" end)
 
-    body = %{"message" => "NOT_IMPLMENTED_ERROR", "experiment" => experiment} |> Poison.encode!()
-    status = 200
-    send_resp(conn, status, body)
+    resp = get_variant(experiment_name, user_id)
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, resp)
   end
 
   post "/api/experiments" do
@@ -56,8 +60,17 @@ defmodule Abento.Router do
     end
   end
 
-  defp get_experiment(id) do
-    Poison.encode!(%{"experiment_id" => id, "label" => "button_color"})
+  defp get_experiment(xp_name) do
+    Amnesia.transaction do
+      # var name matters!
+      selection = Experiment.where(name == xp_name)
+
+      selection
+      |> Amnesia.Selection.values()
+      # @TODO : make sure only one is returned
+      |> hd
+      |> Poison.encode!()
+    end
   end
 
   defp create_experiment(p) do
@@ -80,5 +93,48 @@ defmodule Abento.Router do
       end
 
     {200, body}
+  end
+
+  def get_variant(experiment_name, user_id) do
+    variants =
+      Amnesia.transaction do
+        selection =
+          Experiment.where(
+            name == experiment_name,
+            select: variants
+          )
+
+        selection
+        |> Amnesia.Selection.values()
+        # @TODO : make sure only one is returned
+        |> hd
+
+        # |> Poison.encode!()
+      end
+      |> calculate
+      |> Poison.encode!()
+  end
+
+  def calculate(variants) do
+    ttl =
+      variants
+      |> Enum.map(& &1["allocation"])
+      |> Enum.sum()
+
+    rand = :rand.uniform() * ttl
+
+    decision(variants, rand)
+  end
+
+  defp decision(variants, rand, low \\ 0) do
+    [h | t] = variants
+
+    alloc = h["allocation"]
+    high = alloc + low
+
+    cond do
+      low <= rand && rand < high -> h
+      true -> decision(t, rand, high)
+    end
   end
 end
