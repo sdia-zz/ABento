@@ -38,7 +38,7 @@ config :libcluster,
       config: [
         kubernetes_node_basename: "myapp",
         kubernetes_selector: "app=myapp",
-        polling_interval: 10_000
+        polling_interval: 60_000
       ]
     ]
   ]

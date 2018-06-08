@@ -55,60 +55,60 @@ defdatabase Database do
     end
   end
 
-  deftable Assignment, [:user_hash, :user_id, :experiment, :variant, :assignment_date],
+  deftable Allocation, [:user_hash, :user_id, :experiment, :variant, :allocation_date],
     index: [:user_id, :experiment] do
-    @type t :: %Assignment{
+    @type t :: %Allocation{
             user_hash: String.t(),
             user_id: String.t(),
             experiment: String.t(),
             variant: String.t(),
-            assignment_date: DateTime
+            allocation_date: DateTime
           }
 
-    def assignment(self) do
-      Assignment.read(self.user_hash)
+    def allocation(self) do
+      Allocation.read(self.user_hash)
     end
 
-    def assignment!(self) do
-      Assignment.read!(self.user_hash)
+    def allocation!(self) do
+      Allocation.read!(self.user_hash)
     end
   end
 
-  deftable Action, [:user_hash, :user_id, :experiment, :action_date],
-    index: [:user_id, :experiment] do
-    @type t :: %Action{
-            user_hash: String.t(),
-            user_id: String.t(),
-            experiment: String.t(),
-            action_date: DateTime
-          }
-
-    def action(self) do
-      Action.read(self.user_hash)
-    end
-
-    def action!(self) do
-      Action.read!(self.user_hash)
-    end
-  end
-
-  deftable Impression, [:user_hash, :user_id, :experiment, :impression_date],
-    index: [:user_id, :experiment] do
-    @type t :: %Impression{
-            user_hash: String.t(),
-            user_id: String.t(),
-            experiment: String.t(),
-            impression_date: DateTime
-          }
-
-    def impression(self) do
-      Impression.read(self.user_hash)
-    end
-
-    def impression!(self) do
-      Impression.read!(self.user_hash)
-    end
-  end
+##   deftable Action, [:user_hash, :user_id, :experiment, :action_date],
+##     index: [:user_id, :experiment] do
+##     @type t :: %Action{
+##             user_hash: String.t(),
+##             user_id: String.t(),
+##             experiment: String.t(),
+##             action_date: DateTime
+##           }
+## 
+##     def action(self) do
+##       Action.read(self.user_hash)
+##     end
+## 
+##     def action!(self) do
+##       Action.read!(self.user_hash)
+##     end
+##   end
+## 
+##   deftable Impression, [:user_hash, :user_id, :experiment, :impression_date],
+##     index: [:user_id, :experiment] do
+##     @type t :: %Impression{
+##             user_hash: String.t(),
+##             user_id: String.t(),
+##             experiment: String.t(),
+##             impression_date: DateTime
+##           }
+## 
+##     def impression(self) do
+##       Impression.read(self.user_hash)
+##     end
+## 
+##     def impression!(self) do
+##       Impression.read!(self.user_hash)
+##     end
+##   end
 end
 
 defmodule Abento.DB do
@@ -119,21 +119,21 @@ defmodule Abento.DB do
     Amnesia.transaction do
       variants = [
         %{
-          "name" => "bucket_a",
+          "name" => "bucket_a_25",
           "allocation" => 25,
           "is_control" => true,
           "description" => "bucket A",
           "payload" => "Nada"
         },
         %{
-          "name" => "bucket_b",
+          "name" => "bucket_b_25",
           "allocation" => 25,
           "is_control" => false,
           "description" => "bucket B",
           "payload" => "Nada"
         },
         %{
-          "name" => "bucket_c",
+          "name" => "bucket_c_50",
           "allocation" => 50,
           "is_control" => false,
           "description" => "bucket C",
