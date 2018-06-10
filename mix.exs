@@ -26,9 +26,7 @@ defmodule Abento.MixProject do
       {:plug, "~> 1.0"},
       {:cowboy, "~> 1.0"},
       {:poison, "~> 3.1"},
-      {:amnesia, "~> 0.2"},
       {:libcluster, "~> 2.5"},
-      {:distillery, "~> 1.5"}
     ]
   end
 end
