@@ -14,7 +14,13 @@ defmodule Abento.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :plug, :cowboy, :libcluster],
+      extra_applications: [
+        :logger,
+        :plug,
+        :cowboy,
+        :libcluster,
+        :lbm_kv
+      ],
       mod: {Abento, []},
       env: [cowboy_port: 8000]
     ]
@@ -27,6 +33,7 @@ defmodule Abento.MixProject do
       {:cowboy, "~> 1.0"},
       {:poison, "~> 3.1"},
       {:libcluster, "~> 2.5"},
+      {:lbm_kv, git: "https://github.com/sdia/lbm_kv", ref: "bb959858a6"},
     ]
   end
 end

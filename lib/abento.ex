@@ -8,10 +8,8 @@ defmodule Abento do
     Logger.info(fn -> "pod ip is : #{pod}" end)
 
     # DB
-    Logger.info("Starting the database...")
-    Amnesia.start()
-    Database.create()
-    Abento.DB.populate()
+    Logger.info("Creating fixtures...")
+    Fixtures.run()
 
     # supervisor
     Logger.info("Starting supervisor...")
