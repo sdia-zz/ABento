@@ -83,7 +83,7 @@ defmodule DB do
     # @TODO: manage exclusion as well... or NOT: exclusion is not XP attribute!!
   end
 
-  @spec get_experiment(key()) :: {:ok, Experiment.t} | {:error, any()}
+  @spec get_experiment(key()) :: {:ok, Experiment.t()} | {:error, any()}
   def get_experiment(exp_name) do
     case :lbm_kv.get(Experiment, exp_name) do
       {:ok, [{_, exp}]} -> {:ok, exp}
@@ -91,20 +91,18 @@ defmodule DB do
     end
   end
 
-
   @spec get_experiments() :: {:ok, [Experiment.t()]} | {:error, any()}
   def get_experiments() do
-    ## :lbm_kv.get(Experiment, exp_name)
-
     fun = fn ->
       :mnesia.match_object(
         DB.Experiment,
         :mnesia.table_info(DB.Experiment, :wild_pattern),
-        :read)
+        :read
+      )
     end
 
     case :mnesia.transaction(fun) do
-      {:atomic, exps} -> {:ok, exps |> Enum.map(fn {_, _, xp, _} -> xp end)    }
+      {:atomic, exps} -> {:ok, exps |> Enum.map(fn {_, _, xp, _} -> xp end)}
       resp -> {:error, resp}
     end
   end
@@ -171,14 +169,6 @@ defmodule DB do
   @spec put_assignment(String.t(), Experiment.t()) ::
           {:ok, [{key(), Assignment.t()}]} | {:error, any()}
   def put_assignment(user_id, exp) do
-    ## @type t :: %Assignment{
-    ##   hash_id: String.t,
-    ##   user_id: String.t,
-    ##   experiment_name: String.t,
-    ##   variant: String.t,
-    ##   assign_date: DateTime
-    ## }
-
     # @TODO:
     alloc_variant = "variant_name"
     ## alloc_type = "NEW_ASSIGNMENT"
