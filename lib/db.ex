@@ -77,7 +77,7 @@ defmodule DB do
   def put_experiment(exp) do
     case :lbm_kv.put(Experiment, exp.name, exp) do
       {:ok, [{_, exp}]} -> {:ok, exp}
-      resp -> {:error, resp}      
+      resp -> {:error, resp}
     end
 
     # @TODO: manage exclusion as well... or NOT: exclusion is not XP attribute!!
@@ -104,7 +104,7 @@ defmodule DB do
     end
 
     case :mnesia.transaction(fun) do
-      {:atomic, exps} -> {:ok, exps}
+      {:atomic, exps} -> {:ok, exps |> Enum.map(fn {_, _, xp, _} -> xp end)    }
       resp -> {:error, resp}
     end
   end

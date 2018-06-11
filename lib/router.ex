@@ -2,7 +2,7 @@ defmodule Abento.Router do
   use Plug.Router
   require Logger
 
-  
+
 
   plug(Plug.Logger)
   plug(Plug.Parsers, parsers: [:json], json_decoder: Poison)
@@ -26,7 +26,7 @@ defmodule Abento.Router do
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(200, resp)
+    |> send_resp(200, Poison.encode!(resp))
   end
 
   get "/api/experiments/:name" do
