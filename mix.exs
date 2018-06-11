@@ -34,6 +34,7 @@ defmodule Abento.MixProject do
       {:poison, "~> 3.1"},
       {:libcluster, "~> 2.5"},
       {:lbm_kv, git: "https://github.com/sdia/lbm_kv", ref: "bb959858a6"},
+      {:distillery, "~> 1.5"}
     ]
   end
 end

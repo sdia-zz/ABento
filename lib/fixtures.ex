@@ -35,7 +35,7 @@ defmodule Fixtures do
     variants = [%DB.Variant{name: "variant_4", allocation: 20, is_control: false}]
     exp = %DB.Experiment{name: "experiment_00", sampling: 25, variants: variants, start_date: DateTime.utc_now, end_date: DateTime.utc_now}
 
-    1..100_000
+    1..10
     |> Stream.map(&(to_string(&1)))
     |> Stream.map(&(DB.put_assignment(&1, exp)))
     |> Enum.reduce(0, fn(_x, acc) -> 1 + acc end)
