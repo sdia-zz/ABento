@@ -17,3 +17,11 @@ $ kubectl get pods
 $ kubectl exec -it some-pod -- /bin/bash
 $ _build/prod/rel/abento/bin/abento remote_console
 ```
+
+
+```bash
+# connect load balancer
+http://localhost:8001/api/v1/namespaces/default/services/myelb/proxy/
+
+
+```
